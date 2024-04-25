@@ -1,11 +1,13 @@
 from robocorp.tasks import task
 from robocorp.tasks import get_output_dir
 from RPA.Browser.Selenium import Selenium
-import time, urllib.request, re, string
+import time, urllib.request, re, sys
 import pandas as pd
 
 @task
-def minimal_task(search_phrase, sort_by):
+def minimal_task():
+    search_phrase = sys.argv[1]
+    sort_by = sys.argv[2]
     print("search phrase: ", search_phrase)
     print("sort by: ", sort_by)
     print("opening browser...")
@@ -95,6 +97,6 @@ def minimal_task(search_phrase, sort_by):
     print("Completed!")
     
 
-search_phrase = "israel's war on Gaza" # search phrase to search on website
-sort_by = "date" # for date results send parameter 'date' | for relevancy type 'relevance'
-minimal_task(search_phrase, sort_by) # task functiona call
+# search_phrase = "israel's war on Gaza" # search phrase to search on website
+# sort_by = "date" # for date results send parameter 'date' | for relevancy type 'relevance'
+#minimal_task(search_phrase, sort_by) # task functiona call
