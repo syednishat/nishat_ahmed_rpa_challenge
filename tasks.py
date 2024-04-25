@@ -103,3 +103,9 @@ class NewsScraper:
         news_details = self.scrape_news_details()
         self.write_to_excel(news_details)
         self.browser.close_browser()
+
+# Usage
+search_phrase = "israel's war on Gaza"
+sort_by = "date"
+scraper = NewsScraper(search_phrase, sort_by)
+scraper.run_task()
