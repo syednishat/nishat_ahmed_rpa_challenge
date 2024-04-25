@@ -99,3 +99,6 @@ class NewsScraper:
         news_details = self.scrape_news_details()
         self.write_to_excel(news_details)
         self.browser.close_browser()
+
+scraper = NewsScraper()  # Create an instance of the NewsScraper class
+scraper.run_task() # Call the run_task method on the instance
