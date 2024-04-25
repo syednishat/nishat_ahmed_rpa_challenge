@@ -2,11 +2,21 @@ from robocorp.tasks import task
 from RPA.Browser.Selenium import Selenium
 import time, urllib.request, re
 import pandas as pd
-import sys
+import json
 @task
 def minimal_task():
-    search_phrase = sys.argv[1]
-    sort_by = sys.argv[2]
+    # Read input data from file
+    with open('configuration.json', 'r') as file:
+        input_data = json.load(file)
+
+    # Access variables from input data
+    search_phrase = input_data['search_phrase']
+    sort_by = input_data['sort_by']
+
+    # Use the variables in your code
+    print("Search Phrase:", search_phrase)
+    print("Sort By:", sort_by)
+
     print("opening browser...")
     browser = Selenium(auto_close = False)
     print("navigating to news website...")
