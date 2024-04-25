@@ -5,9 +5,7 @@ import time, urllib.request, re, sys
 import pandas as pd
 
 @task
-def minimal_task():
-    search_phrase = sys.argv[1]
-    sort_by = sys.argv[2]
+def minimal_task(search_phrase="israels war on gaza",sort_by="date"):
     print("search phrase: ", search_phrase)
     print("sort by: ", sort_by)
     print("opening browser...")
