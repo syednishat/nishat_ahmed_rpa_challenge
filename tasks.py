@@ -6,6 +6,8 @@ import pandas as pd
 
 @task
 def minimal_task(search_phrase, sort_by):
+    print("search phrase: ", search_phrase)
+    print("sort by: ", sort_by)
     print("opening browser...")
     browser = Selenium(auto_close = False)
     print("navigating to news website...")
