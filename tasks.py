@@ -1,9 +1,10 @@
+from robocorp.tasks import task
+from robocorp.tasks import get_output_dir
 from RPA.Browser.Selenium import Selenium
-import urllib.request
+import time, urllib.request, re, string
 import pandas as pd
-import time
-import re
 
+@task
 class NewsScraper:
     def __init__(self, search_phrase, sort_by):
         self.search_phrase = search_phrase
