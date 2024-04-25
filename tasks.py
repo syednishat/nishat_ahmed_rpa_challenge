@@ -2,11 +2,11 @@ from robocorp.tasks import task
 from RPA.Browser.Selenium import Selenium
 import time, urllib.request, re
 import pandas as pd
-
+import sys
 @task
 def minimal_task():
-    search_phrase = "israels war on gaza"
-    sort_by = "date"
+    search_phrase = sys.argv[1]
+    sort_by = sys.argv[2]
     print("opening browser...")
     browser = Selenium(auto_close = False)
     print("navigating to news website...")
