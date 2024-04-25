@@ -11,12 +11,12 @@ class NewsScraper:
 
     def open_browser(self):
         print("Opening browser...")
-        self.browser = Selenium(auto_close=False)
+        self.browser = Selenium(auto_close=False) # avoiding auto close after exection is completed
 
     def navigate_to_website(self):
         print("Navigating to news website...")
         self.browser.open_available_browser('https://www.aljazeera.com/')
-        self.browser.implicit_wait = 30
+        self.browser.implicit_wait = 30 # implicit wait
         self.browser.click_element("id:onetrust-accept-btn-handler") # accept cookies
         time.sleep(2)# explicit wait
         self.browser.click_element('//*[@id="root"]/div/div[1]/div[1]/div/header/div[4]/div[2]/button')
@@ -24,12 +24,13 @@ class NewsScraper:
     def search_news(self):
         print("Searching for news...")
         self.browser.wait_until_element_is_visible("class:search-bar__input")
-        self.browser.input_text("class:search-bar__input", self.search_phrase)
+        self.browser.input_text("class:search-bar__input", self.search_phrase)# typing search phrase
         time.sleep(2)# explicit wait
         self.browser.click_button("Search")
         self.browser.implicit_wait = 30
 
     def sort_news(self):
+        # sorting the new based on date or relevance
         print("Sorting based on", self.sort_by, "...")
         self.browser.wait_until_element_is_visible("id:search-sort-option")
         self.browser.click_element("id:search-sort-option")
@@ -38,15 +39,16 @@ class NewsScraper:
 
     def scrape_news_details(self):
         print("Scraping details from website...")
+        #scraping news titles
         heading_titles = self.browser.find_elements("xpath=//h3[@class='gc__title']")
         news_titles = [element.text.strip() for element in heading_titles]
-
+        # scraping new description
         description_divs = self.browser.find_elements("xpath=//div[@class='gc__body-wrap']")
         news_descriptions = [element.text for element in description_divs]
 
         search_phrase_count = []
         money_check = []
-
+        # checking occurance of search phrase in title & description
         for index in range(len(news_titles)):
             title = news_titles[index].lower()
             description = news_descriptions[index].lower()
@@ -54,14 +56,14 @@ class NewsScraper:
             occurrences = len(re.findall('(?=('+search_phrase_lower+'))', title)) + \
                           len(re.findall('(?=('+search_phrase_lower+'))', description))
             search_phrase_count.append(occurrences)
-
+            # checkng if money is mentioned in title and description
             money_found = "$" in title or "usd" in title or "dollar" in title or \
                           "$" in description or "usd" in description or "dollar" in description
             money_check.append("True" if money_found else "False")
-
+        # scraping dates of news
         date_divs = self.browser.find_elements("xpath=//footer[@class='gc__footer']")
         news_dates = [element.text for element in date_divs]
-
+        # scraping images urls of news
         img_elements = self.browser.find_elements("xpath=//img[@class='article-card__image gc__image']")
         image_links = [element.get_attribute("src") for element in img_elements]
 
