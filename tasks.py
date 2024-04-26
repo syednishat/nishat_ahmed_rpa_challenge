@@ -68,13 +68,16 @@ class NewsScraper:
         excel_file = "output/news_scraped_data.xlsx"
         self.excel.create_workbook(excel_file)
         self.excel.open_workbook(excel_file)
-
         for key, values in new_details_dictionary.items():
-            self.excel.create_worksheet(key)
+            worksheet_name = key
+            counter = 1
+            while worksheet_name in self.excel.sheetnames:
+                worksheet_name = f"{key}_{counter}"
+                counter += 1
+            self.excel.create_worksheet(worksheet_name)
             self.excel.set_cell_value(1, 1, key)
             for index, value in enumerate(values, start=2):
                 self.excel.set_cell_value(index, 1, value)
-
         self.excel.save_workbook()
         self.excel.close_workbook()
         print("Completed!")
