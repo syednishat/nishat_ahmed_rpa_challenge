@@ -58,28 +58,31 @@ class NewsScraper:
             image_name = news_titles[image_link_index].replace(" ", "_").replace("|", "_").replace("?", "_").replace("'", "").replace(".", "").replace(":", "").replace(";", "")
             image_filename = f"output/{image_name}.jpg"
             image_filenames.append(image_filename)
-            urllib.request.urlretrieve(image_link, f"downloads\\{image_name}.jpg")
+            urllib.request.urlretrieve(image_link, f"output/{image_name}.jpg")
             time.sleep(2)
 
         new_details_dictionary = {"title": news_titles, "date": news_dates, "description": news_descriptions,
                                   "picture filename": image_filenames, "search phrase count": search_phrase_count,
                                   "money": money_check}
 
+        # Specify the Excel file path
         excel_file = "output/news_scraped_data.xlsx"
+
+        # Create a new Excel file or overwrite if it already exists
         self.excel.create_workbook(excel_file)
-        self.excel.open_workbook(excel_file)
-        for key, values in new_details_dictionary.items():
-            worksheet_name = key
-            counter = 1
-            while worksheet_name in self.excel.sheetnames:
-                worksheet_name = f"{key}_{counter}"
-                counter += 1
-            self.excel.create_worksheet(worksheet_name)
-            self.excel.set_cell_value(1, 1, key)
-            for index, value in enumerate(values, start=2):
-                self.excel.set_cell_value(index, 1, value)
+
+        try:
+            self.excel.remove_worksheet("Sheet1")
+        except Exception:
+            pass
+
+        # Write the dictionary to the Excel file
+        self.excel.create_worksheet("Sheet1", new_details_dictionary, header=True)
+
+        # Save and close the Excel file
         self.excel.save_workbook()
         self.excel.close_workbook()
+
         print("Completed!")
 
 @task
