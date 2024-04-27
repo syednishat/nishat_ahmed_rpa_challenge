@@ -35,6 +35,7 @@ class NewsScraper:
         self.browser.click_element('//*[@id="root"]/div/div[1]/div[1]/div/header/div[4]/div[2]/button')
         self.logger.info("Searching for news...")
         self.browser.wait_until_element_is_visible("class:search-bar__input")
+        self.logger.info("searching for %s ...", self.search_phrase)
         self.browser.input_text("class:search-bar__input", self.search_phrase)
         time.sleep(2)
         self.browser.click_button("Search")
@@ -108,16 +109,16 @@ class NewsScraper:
 @task
 def minimal_task():
     # Initialize variables
-    search_phrase = ""
-    sort_by = ""
+    search_phrase = "israels war on gaza"
+    sort_by = "date"
 
-    # Fetch input parameters from Robocorp Work Item
-    for item in workitems.inputs:
-        search_phrase = item.payload["search_phrase"]
-        sort_by = item.payload["sort_by"]
-        print("search_phrase: ",search_phrase)
-        print("sort_by: ",sort_by)
-        break
+    # # Fetch input parameters from Robocorp Work Item
+    # for item in workitems.inputs:
+    #     search_phrase = item.payload["search_phrase"]
+    #     sort_by = item.payload["sort_by"]
+    #     print("search_phrase: ",search_phrase)
+    #     print("sort_by: ",sort_by)
+    #     break
     print("search_phrase: ",search_phrase)
     print("sort_by: ",sort_by)
     # Instantiate NewsScraper and scrape news
