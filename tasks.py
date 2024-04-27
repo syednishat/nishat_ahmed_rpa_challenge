@@ -105,13 +105,12 @@ class NewsScraper:
 
 @task
 def minimal_task():
-    search_phrase = ""
-    sort_by = ""
     # Fetch input parameters from Robocorp Work Item
     for item in workitems.inputs:
         search_phrase = item.payload["search_phrase"]
         sort_by = item.payload["sort_by"]
-
+    print("search_phrase: ",search_phrase)
+    print("sort_by: ",sort_by)
     # Instantiate NewsScraper and scrape news
     scraper = NewsScraper(search_phrase, sort_by)
     scraper.scrape_news()
