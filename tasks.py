@@ -113,10 +113,9 @@ def minimal_task():
     # search_phrase = input_data['search_phrase']
     # sort_by = input_data['sort_by']
 
-    # Fetch parameters from Robocorp Work Item
-    work_item = workitems.get()
-    search_phrase = work_item['search_phrase']
-    sort_by = work_item['sort_by']
+    # Fetch input parameters from Robocorp Work Item
+    search_phrase = workitems.get_input("search_phrase")
+    sort_by = workitems.get_input("sort_by")
 
     # Instantiate NewsScraper and scrape news
     scraper = NewsScraper(search_phrase, sort_by)
