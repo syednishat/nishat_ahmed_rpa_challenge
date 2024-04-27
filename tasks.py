@@ -105,19 +105,12 @@ class NewsScraper:
 
 @task
 def minimal_task():
-    # # Read input data from file
-    # with open('configuration.json', 'r') as file:
-    #     input_data = json.load(file)
-
-    # # Access variables from input data
-    # search_phrase = input_data['search_phrase']
-    # sort_by = input_data['sort_by']
-    for item in workitems.inputs:
-        print("item:",item)
-    print("--------------------------")
+    search_phrase = ""
+    sort_by = ""
     # Fetch input parameters from Robocorp Work Item
-    search_phrase = workitems.get_input("search_phrase")
-    sort_by = workitems.get_input("sort_by")
+    for item in workitems.inputs:
+        search_phrase = item.payload["search_phrase"]
+        sort_by = item.payload["sort_by"]
 
     # Instantiate NewsScraper and scrape news
     scraper = NewsScraper(search_phrase, sort_by)
