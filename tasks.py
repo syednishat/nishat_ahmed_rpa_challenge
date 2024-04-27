@@ -2,9 +2,10 @@ import logging
 import re
 import time
 import urllib.request
-import json
+#import json
 
 from robocorp.tasks import task
+from robocorp import workitems
 from RPA.Browser.Selenium import Selenium
 from RPA.Excel.Files import Files
 
@@ -104,13 +105,18 @@ class NewsScraper:
 
 @task
 def minimal_task():
-    # Read input data from file
-    with open('configuration.json', 'r') as file:
-        input_data = json.load(file)
+    # # Read input data from file
+    # with open('configuration.json', 'r') as file:
+    #     input_data = json.load(file)
 
-    # Access variables from input data
-    search_phrase = input_data['search_phrase']
-    sort_by = input_data['sort_by']
+    # # Access variables from input data
+    # search_phrase = input_data['search_phrase']
+    # sort_by = input_data['sort_by']
+
+    # Fetch parameters from Robocorp Work Item
+    work_item = workitems.get()
+    search_phrase = work_item['search_phrase']
+    sort_by = work_item['sort_by']
 
     # Instantiate NewsScraper and scrape news
     scraper = NewsScraper(search_phrase, sort_by)
