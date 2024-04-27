@@ -113,8 +113,8 @@ def minimal_task():
     # search_phrase = input_data['search_phrase']
     # sort_by = input_data['sort_by']
     for item in workitems.inputs:
-        print(item)
-
+        print("item:",item)
+    print("--------------------------")
     # Fetch input parameters from Robocorp Work Item
     search_phrase = workitems.get_input("search_phrase")
     sort_by = workitems.get_input("sort_by")
